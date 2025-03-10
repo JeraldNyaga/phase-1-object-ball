@@ -127,6 +127,8 @@ function homeTeamName() {
 // for (const key in gameObject()["home"]) {
 //     console.log(key)
 // }
+
+
 //Assignment begins here:
 
 // This function takes in an argument of a player's name and returns the number of points scored for that player
@@ -273,7 +275,7 @@ function bigShoeRebounds() {
         }
     }
     const rebouds = playerStats(bigFootPlayerName)["rebounds"]
-    return `The name of the player with biggest foot size is: ${bigFootPlayerName}/n Their shoe size is ${bigFootSize} and their rebouds are: ${rebouds}`
+    return `The name of the player with biggest foot size is: ${bigFootPlayerName}\n.Their shoe size is ${bigFootSize} and their rebouds are: ${rebouds}`
 }
 console.log(bigShoeRebounds());
 
@@ -301,15 +303,52 @@ console.log(mostPointsScored())
 
 // This function returns the team with the most points scored
 function winningTeam() {
+    const gameObj = gameObject();
+    let homeTeamPoints = 0;
+    let awayTeamPoints = 0;
 
+    for (homeGamePlayer in gameObj["home"]["players"]) {
+        const playerPoints = parseInt(numPointsScored(homeGamePlayer))
+        homeTeamPoints += playerPoints;
+    }
+    for (awayGamePlayer in gameObj["away"]["players"]) {
+        const playerPoints = parseInt(numPointsScored(awayGamePlayer))
+        awayTeamPoints += playerPoints;
+    }
+    if (homeTeamPoints > awayTeamPoints) {
+        return `${gameObj["home"]["teamName"]} had the most points\nThe points were ${homeTeamPoints}`
+    }
+    else if (homeTeamPoints < awayTeamPoints) {
+        return `${gameObj["away"]["teamName"]} had the most points\nThe points were ${awayTeamPoints}`
+    }
+    else {
+        return `${gameObj["away"]["teamName"]} and ${gameObj["home"]["teamName"]} had the same number of points\nThe points were ${awayTeamPoints}`
+    }
 }
+
+console.log(winningTeam())
 
 // This function returns the name of the player with the Longest Name
 function playerWithLongestName() {
+    const gameObj = gameObject();
+    let playerLongName = '';
 
+    for (homeGamePlayer in gameObj["home"]["players"]) {
+        if (homeGamePlayer.replace(/\s+/g, "").length > playerLongName.length) {
+            playerLongName = homeGamePlayer;
+        }
+    }
+    for (awayGamePlayer in gameObj["away"]["players"]) {
+        if (awayGamePlayer.replace(/\s+/g, "").length > playerLongName.length) {
+            playerLongName = awayGamePlayer;
+        }
+    }
+    return playerLongName
 }
+
+console.log(playerWithLongestName())
 
 // This function returns true if the player with the longest name had the most steals.
 function doesLongNameStealATon() {
-
+    
 }
