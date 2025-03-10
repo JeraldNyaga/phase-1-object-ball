@@ -158,7 +158,7 @@ function shoeSize(playerName) {
     const gameObj = gameObject();
 
     for (homeGamePlayer in gameObj["home"]["players"]) {
-        if (homeGamePlayer == playerName) {
+        if (homeGamePlayer === playerName) {
             return gameObj["home"]["players"][homeGamePlayer]["shoe"]
         }
     }
@@ -238,7 +238,7 @@ console.log(playerNumbers("Manchester United")); // invalid team players numbers
 // This function takes in an argument of a player's name and returns an object of that player's stats
 function playerStats(playerName) {
     for (homeGamePlayer in gameObj["home"]["players"]) {
-        if (homeGamePlayer == playerName) {
+        if (homeGamePlayer === playerName) {
             return gameObj["home"]["players"][homeGamePlayer]
         }
     }
@@ -256,13 +256,48 @@ console.log(playerStats("Alan Anderson")) // Home team player stats
 
 // This function return the number of rebounds associated with the player that has the largest shoe size
 function bigShoeRebounds() {
-    
+    const gameObj = gameObject();
+    let bigFootSize = 0;
+    let bigFootPlayerName = '';
+
+    for (homeGamePlayer in gameObj["home"]["players"]) {
+        if (parseInt(shoeSize(homeGamePlayer)) > bigFootSize) {
+            bigFootPlayerName = homeGamePlayer;
+            bigFootSize = parseInt(shoeSize(homeGamePlayer))
+        }
+    }
+    for (awayGamePlayer in gameObj["away"]["players"]) {
+        if (parseInt(shoeSize(awayGamePlayer)) > bigFootSize) {
+            bigFootPlayerName = awayGamePlayer;
+            bigFootSize = parseInt(shoeSize(awayGamePlayer))
+        }
+    }
+    const rebouds = playerStats(bigFootPlayerName)["rebounds"]
+    return `The name of the player with biggest foot size is: ${bigFootPlayerName}/n Their shoe size is ${bigFootSize} and their rebouds are: ${rebouds}`
 }
+console.log(bigShoeRebounds());
 
 // This function returns the name of the player with the most points scored
 function mostPointsScored() {
+    const gameObj = gameObject();
+    let pointsScored = 0;
+    let scoreMaster = '';
 
+    for (homeGamePlayer in gameObj["home"]["players"]) {
+        if (parseInt(numPointsScored(homeGamePlayer)) > pointsScored) {
+            scoreMaster = homeGamePlayer;
+            pointsScored = parseInt(numPointsScored(homeGamePlayer))
+        }
+    }
+    for (awayGamePlayer in gameObj["away"]["players"]) {
+        if (parseInt(numPointsScored(awayGamePlayer)) > pointsScored) {
+            scoreMaster = awayGamePlayer;
+            pointsScored = parseInt(numPointsScored(awayGamePlayer))
+        }
+    }
+    return `The name of the player with most points scored is ${scoreMaster}\nTheir total points is ${pointsScored}`
 }
+console.log(mostPointsScored())
 
 // This function returns the team with the most points scored
 function winningTeam() {
