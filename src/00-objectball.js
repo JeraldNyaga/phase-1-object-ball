@@ -350,5 +350,19 @@ console.log(playerWithLongestName())
 
 // This function returns true if the player with the longest name had the most steals.
 function doesLongNameStealATon() {
-    
+    let verdict = true;
+    for (homeGamePlayer in gameObj["home"]["players"]) {
+        if (parseInt(playerStats(homeGamePlayer)["steals"]) > parseInt(playerStats(playerWithLongestName())["steals"])) {
+            verdict = false
+            return verdict
+        }
+    }
+    for (awayGamePlayer in gameObj["away"]["players"]) {
+        if (parseInt(playerStats(awayGamePlayer)["steals"]) > parseInt(playerStats(playerWithLongestName())["steals"])) {
+            verdict = false
+            return verdict
+        }
+    }
+    return verdict
 }
+console.log(doesLongNameStealATon())
